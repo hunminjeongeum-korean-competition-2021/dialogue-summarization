@@ -334,18 +334,16 @@ def bind_model(model, parser):
                 predict = model.predict([encoder_input_test[i:i+batch], decoder_input_test[i:i+batch]]).argmax(2)
                 summary  = np.concatenate([summary,predict])
 
-        prob = [1]*len(encoder_input_test)
-
+        test_id = test_data['dialogueID']
+        
         # DONOTCHANGE: They are reserved for nsml
-        # 리턴 결과는 [(확률, 0 or 1)] 의 형태로 보내야만 리더보드에 올릴 수 있습니다.
-        # return list(zip(pred.flatten(), clipped.flatten()))
-        return list(zip(prob, summary))
+        # 리턴 결과는 [(id, summary)] 의 형태로 보내야만 리더보드에 올릴 수 있습니다.
+        # ex)[(' efe21026-0715-5ca4-99fe-46d0ecfba147', '철수는 밥을 먹었다.'), ...]
+        return list(zip(test_id, summary))
 
     # DONOTCHANGE: They are reserved for nsml
     # nsml에서 지정한 함수에 접근할 수 있도록 하는 함수입니다.
     nsml.bind(save=save, load=load, infer=infer)
-
-\
 
 
 if __name__ == '__main__':
@@ -428,7 +426,7 @@ if __name__ == '__main__':
         }
 
         for epoch in range(args.epochs):
-            print(f'now training {epoch} epoch!')
+            print('학습 시작!')
             train(model)
 
             # DONOTCHANGE (You can decide how often you want to save the model)
