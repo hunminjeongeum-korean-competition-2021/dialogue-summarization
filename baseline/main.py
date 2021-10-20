@@ -436,7 +436,6 @@ if __name__ == '__main__':
             'hidden_size' : hidden_size,
             'text_max_len' : text_max_len,
             'summary_max_len' : summary_max_len,
-
             'tar_index_to_word' : tar_index_to_word
         }
 
